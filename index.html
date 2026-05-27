@@ -35,7 +35,6 @@
       min-height: 100vh;
     }
 
-    /* subtle dot grid */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0;
@@ -103,7 +102,6 @@
     }
     @media (max-width: 640px) { .predict-grid { grid-template-columns: 1fr; } }
 
-    /* Canvas */
     .canvas-wrap {
       display: flex; flex-direction: column; align-items: center; gap: 1rem;
     }
@@ -119,7 +117,6 @@
 
     .canvas-controls { display: flex; gap: .5rem; width: 100%; }
 
-    /* Tabs inside card */
     .input-tabs { display: flex; gap: 4px; margin-bottom: 1rem; }
     .input-tab {
       flex: 1; padding: 8px; border-radius: 8px;
@@ -137,7 +134,6 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
 
-    /* Upload zone */
     .upload-zone {
       width: 100%; min-height: 220px;
       border: 2px dashed var(--border);
@@ -158,7 +154,6 @@
     #upload-preview { max-width: 200px; border-radius: 8px; display: none; }
     #file-input { display: none; }
 
-    /* Buttons */
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
       gap: .5rem; padding: 10px 20px; border-radius: 8px;
@@ -175,7 +170,6 @@
     }
     .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
 
-    /* Result panel */
     .result-empty {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -207,7 +201,6 @@
     }
     .conf-label strong { color: var(--green); font-family: var(--mono); font-size: 16px; }
 
-    /* Confidence bars */
     .conf-bars { display: flex; flex-direction: column; gap: 5px; }
     .conf-row {
       display: grid; grid-template-columns: 18px 1fr 46px;
@@ -235,7 +228,6 @@
       image-rendering: pixelated;
     }
 
-    /* Loading spinner */
     .spinner {
       width: 32px; height: 32px;
       border: 3px solid var(--border);
@@ -251,7 +243,6 @@
       color: var(--muted); font-size: 13px;
     }
 
-    /* ── VALIDATE PAGE ── */
     .metrics-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
       margin-bottom: 1rem;
@@ -299,7 +290,6 @@
     .thumb-item img.err { border-color: var(--red); }
     .thumb-item span { display: block; font-size: 10px; font-family: var(--mono); color: var(--muted); margin-top: 3px; }
 
-    /* Confusion matrix */
     .cm-wrap { overflow-x: auto; }
     .cm-table { border-collapse: collapse; font-family: var(--mono); font-size: 11px; margin: 0 auto; }
     .cm-table th, .cm-table td {
@@ -311,7 +301,6 @@
     .cm-cell-0 { color: var(--muted); }
     .cm-cell-1 { background: rgba(79,142,247,.5); color: #fff; font-weight: 600; }
 
-    /* ── ABOUT PAGE ── */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
 
@@ -356,7 +345,6 @@
       font-size: 13px; line-height: 1.75; color: var(--text);
     }
 
-    /* toast */
     .toast {
       position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
       background: var(--card); border: 1px solid var(--border);
@@ -367,7 +355,6 @@
     }
     .toast.show { opacity: 1; }
 
-    /* validate placeholder */
     .validate-placeholder {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -378,7 +365,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <span class="nav-logo">🔢 MNIST Classifier</span>
   <div class="nav-tabs">
@@ -388,9 +374,7 @@
   </div>
   <span class="nav-badge">BSCS 3A</span>
 </nav>
-  
 
-<!-- ═══════ PREDICT PAGE ═══════ -->
 <div id="page-predict" class="page active">
   <div class="container">
     <div class="page-header">
@@ -399,8 +383,6 @@
     </div>
 
     <div class="predict-grid">
-
-      <!-- Input Card -->
       <div class="card">
         <div class="card-title">Input</div>
         <div class="input-tabs">
@@ -408,7 +390,6 @@
           <div class="input-tab" onclick="switchInputTab('upload', this)">📁 Upload</div>
         </div>
 
-        <!-- Draw tab -->
         <div id="tab-draw" class="tab-panel active">
           <canvas id="draw-canvas" width="280" height="280" style="background:#000;"></canvas>
           <div class="canvas-controls">
@@ -418,7 +399,6 @@
           <small style="color:var(--muted);font-size:11px;">Draw large & centred · white on black</small>
         </div>
 
-        <!-- Upload tab -->
         <div id="tab-upload" class="tab-panel">
           <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
             <div class="upload-icon">🖼️</div>
@@ -434,7 +414,6 @@
         </button>
       </div>
 
-      <!-- Result Card -->
       <div class="card">
         <div class="card-title">Result</div>
 
@@ -456,12 +435,10 @@
           <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:.5rem;">28×28 model input</p>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ═══════ VALIDATE PAGE ═══════ -->
 <div id="page-validate" class="page">
   <div class="container">
     <div class="page-header">
@@ -476,7 +453,6 @@
     </div>
 
     <div id="validate-results" style="display:none;">
-
       <div class="metrics-grid" id="metrics-grid"></div>
 
       <div class="card" style="margin-bottom:1rem;">
@@ -503,12 +479,10 @@
           Row = true label · Column = predicted · Blue diagonal = correct predictions
         </p>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ═══════ ABOUT PAGE ═══════ -->
 <div id="page-about" class="page">
   <div class="container">
     <div class="page-header">
@@ -614,13 +588,11 @@
 <script>
   // ── CONFIG — replace with your Render.com URL after deploying the backend ──
   const API_BASE = 'https://mnist-backend-tun0.onrender.com';
-  // Example: const API_BASE = 'https://mnist-classifier-api.onrender.com';
 
   // ── PAGE NAVIGATION ──────────────────────────────────────────────────────
   function switchPage(name, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    
     document.getElementById('page-' + name).classList.add('active');
     if (element) {
       element.classList.add('active');
@@ -633,14 +605,12 @@
     activeInputTab = tab;
     document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    
     if (element) {
       element.classList.add('active');
     }
     document.getElementById('tab-' + tab).classList.add('active');
     updatePredictBtn();
   }
-  
 
   // ── CANVAS DRAWING ───────────────────────────────────────────────────────
   const canvas = document.getElementById('draw-canvas');
@@ -650,10 +620,19 @@
   let currentStroke = [];
   let hasDrawn = false;
 
+  // Optimized configurations for precise model downscaling
   ctx.strokeStyle = '#fff';
-  ctx.lineWidth = 20;
+  ctx.lineWidth = 16; 
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+
+  // Initialize canvas with solid black fill to ensure proper base alpha transparency
+  initCanvasBackground();
+
+  function initCanvasBackground() {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
 
   function getPos(e) {
     const r = canvas.getBoundingClientRect();
@@ -671,7 +650,8 @@
   canvas.addEventListener('touchend', () => { if (drawing) { drawing = false; strokes.push([...currentStroke]); hasDrawn = true; updatePredictBtn(); } });
 
   function clearCanvas() {
-    ctx.clearRect(0, 0, 280, 280);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    initCanvasBackground();
     strokes = []; hasDrawn = false;
     updatePredictBtn();
     resetResult();
@@ -680,7 +660,10 @@
   function undoStroke() {
     if (!strokes.length) return;
     strokes.pop();
-    ctx.clearRect(0, 0, 280, 280);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    initCanvasBackground();
+    
+    // Redraw historical path strokes sequentially
     strokes.forEach(stroke => {
       ctx.beginPath();
       stroke.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
@@ -772,7 +755,6 @@
     document.getElementById('pred-badge').textContent = data.predicted;
     document.getElementById('conf-value').textContent = data.confidence.toFixed(1) + '%';
 
-    // Confidence bars
     const barsEl = document.getElementById('conf-bars');
     barsEl.innerHTML = '';
     data.probabilities.forEach((p, i) => {
@@ -819,7 +801,6 @@
     document.getElementById('validate-placeholder').style.display = 'none';
     document.getElementById('validate-results').style.display = 'block';
 
-    // Metrics
     const mg = document.getElementById('metrics-grid');
     const metrics = [
       ['Overall Accuracy', d.overall_acc + '%'],
@@ -833,7 +814,6 @@
         <div class="metric-name">${n}</div>
       </div>`).join('');
 
-    // Thumbnails
     const tr = document.getElementById('thumbs-row');
     tr.innerHTML = d.run_details.map(r => `
       <div class="thumb-item">
@@ -841,7 +821,6 @@
         <span>${r.correct ? '✅' : '❌'} ${r.true_label}→${r.predicted}</span>
       </div>`).join('');
 
-    // Runs table
     const tbody = document.getElementById('runs-body');
     tbody.innerHTML = d.run_details.map(r => `
       <tr class="${r.correct ? 'correct' : 'wrong'}">
@@ -852,7 +831,6 @@
         <td><span class="badge ${r.correct ? 'badge-ok' : 'badge-err'}">${r.correct ? '✓ Correct' : '✗ Wrong'}</span></td>
       </tr>`).join('');
 
-    // Confusion matrix
     const cm = d.confusion_matrix;
     let html = '<table class="cm-table"><tr><th></th>' + [...Array(10)].map((_,i) => `<th>${i}</th>`).join('') + '</tr>';
     cm.forEach((row, ri) => {
