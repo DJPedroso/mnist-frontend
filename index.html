@@ -382,12 +382,13 @@
 <nav>
   <span class="nav-logo">🔢 MNIST Classifier</span>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchPage('predict')">Predict</button>
-    <button class="nav-tab" onclick="switchPage('validate')">Validate</button>
-    <button class="nav-tab" onclick="switchPage('about')">About</button>
+    <button class="nav-tab active" onclick="switchPage('predict', this)">Predict</button>
+    <button class="nav-tab" onclick="switchPage('validate', this)">Validate</button>
+    <button class="nav-tab" onclick="switchPage('about', this)">About</button>
   </div>
   <span class="nav-badge">BSCS 3A</span>
 </nav>
+  
 
 <!-- ═══════ PREDICT PAGE ═══════ -->
 <div id="page-predict" class="page active">
@@ -403,8 +404,8 @@
       <div class="card">
         <div class="card-title">Input</div>
         <div class="input-tabs">
-          <div class="input-tab active" onclick="switchInputTab('draw')">✏️ Draw</div>
-          <div class="input-tab" onclick="switchInputTab('upload')">📁 Upload</div>
+          <div class="input-tab active" onclick="switchInputTab('draw', this)">✏️ Draw</div>
+          <div class="input-tab" onclick="switchInputTab('upload', this)">📁 Upload</div>
         </div>
 
         <!-- Draw tab -->
@@ -616,23 +617,30 @@
   // Example: const API_BASE = 'https://mnist-classifier-api.onrender.com';
 
   // ── PAGE NAVIGATION ──────────────────────────────────────────────────────
-  function switchPage(name) {
+  function switchPage(name, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    
     document.getElementById('page-' + name).classList.add('active');
-    event.target.classList.add('active');
+    if (element) {
+      element.classList.add('active');
+    }
   }
 
   // ── INPUT TABS ───────────────────────────────────────────────────────────
   let activeInputTab = 'draw';
-  function switchInputTab(tab) {
+  function switchInputTab(tab, element) {
     activeInputTab = tab;
     document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    event.target.classList.add('active');
+    
+    if (element) {
+      element.classList.add('active');
+    }
     document.getElementById('tab-' + tab).classList.add('active');
     updatePredictBtn();
   }
+  
 
   // ── CANVAS DRAWING ───────────────────────────────────────────────────────
   const canvas = document.getElementById('draw-canvas');
